@@ -61,7 +61,7 @@ const make_grid = (rows, cols) => {
   let grid = {};
   grid.grid = list(rows)
     .map((_, r) =>
-      list(cols).map((_, c) => box_manager(...make_grid_position(r, c))),
+      list(cols).map((_, c) => box_manager(...make_grid_position(r, c)))
     )
     .flat();
   grid.full = () => grid.grid.length >= max_amt;
@@ -85,14 +85,16 @@ const box_manager = (x, y, z) => {
 
     // this is the tick function, it will run every frame
     // see it being called in the animate function
-    tick: function() {
+    tick: function () {
       // reduce lifetime
       this.lifetime -= 1;
-
       if (this.x > width || this.x < 0 || this.y > height || this.y < 0) {
         // get new x and y
         //
-        [this.x, this.y] = offset_position(this.x, this.y, 0, [0, width]);
+        [this.x, this.y] = offset_position(this.x, this.y, 0, [
+          0,
+          width - width / 6,
+        ]);
       }
 
       push();
@@ -128,17 +130,18 @@ function preload() {
 }
 
 function setup() {
-  let w = 900;
-  let h = w * 1.414;
+  let w = 2000;
+  // let h = w * 1.414;
+  let h = w;
+  h = 1700;
   createCanvas(w, h, WEBGL);
   pixelDensity(1);
-
   grid = make_grid(10, 10);
   posterLayer = createGraphics(
     width,
     height,
     P2D,
-    document.getElementById("canvas"),
+    document.getElementById("canvas")
   );
   // print(txts.length)
 }

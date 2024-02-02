@@ -84,7 +84,7 @@ const box_manager = (x, y, z) => {
 
     // this is the tick function, it will run every frame
     // see it being called in the animate function
-    tick: function () {
+    tick: function() {
       // reduce lifetime
       this.lifetime -= 1;
 
@@ -114,31 +114,9 @@ const make_grid_position = (row, col) => {
   return [x, y, 0];
 };
 
-/** will take a position and return a box at that position
- * @returns {object} The box object. */
-const make_box_at = (x, y, z) => {
-  let s = random(size_min, size_max);
-
-  // let sphere = new Sphere({
-  //   x,
-  //   y,
-  //   z,
-  //   scaleX: s,
-  //   scaleY: s,
-  //   scaleZ: s,
-  //   red: 200,
-  //   green: 200,
-  //   blue: 200,
-  // });
-  //
-  // world.add(sphere);
-  //
-  // return sphere;
-};
-
 function setup() {
   let w = 900;
-  let h = w * 1.4145;
+  let h = w * 1.414;
   createCanvas(w, h, WEBGL);
   pixelDensity(1);
 
@@ -156,6 +134,10 @@ function draw() {
   // background(0, 255, 0);
   noStroke();
 
+  push();
+
+  translate(-width / 2, -height / 2, 0);
+
   let dirX = (mouseX / width - 0.5) * 2;
   let dirY = (mouseY / height - 0.5) * 2;
   directionalLight(250, 250, 250, -dirX, -dirY, -1);
@@ -165,11 +147,9 @@ function draw() {
   grid.grid.forEach((b) => b.tick());
   dispose();
 
-  posterLayer.image(
-    get(0, 0, width, height),
-    0,
-    0,
-    posterLayer.width,
-    posterLayer.height,
-  );
+  let cut = get(0, 0, width, height);
+
+  pop();
+
+  posterLayer.image(cut, 0, 0, posterLayer.width, posterLayer.height);
 }

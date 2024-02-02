@@ -161,5 +161,5 @@ function draw() {
 
   // blendMode(MULTIPLY);
 
-  posterLayer.image(cut, 0, 0, posterLayer.width, posterLayer.height);
+  // posterLayer.image(cut, 0, 0, posterLayer.width, posterLayer.height);
 }

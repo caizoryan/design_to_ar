@@ -40,12 +40,13 @@ const remove_from_grid = (id) =>
 
 /** will take an id and remove the object with that id from the scene and the grid */
 const dispose = () => {
-  // grid.grid.forEach((b) => {
-  //   if (b.lifetime <= 0) {
-  //     world.remove(b.instance);
-  //   }
-  // });
+  let len = grid.grid.length;
   grid.grid = grid.grid.filter((b) => b.lifetime > 0);
+
+  let diff = len - grid.grid.length;
+  if (diff > 0) {
+    console.log("disposing", diff);
+  }
 };
 
 // ----------------
@@ -88,8 +89,16 @@ const box_manager = (x, y, z) => {
       // reduce lifetime
       this.lifetime -= 1;
 
+      if (this.x > width || this.x < 0 || this.y > height || this.y < 0) {
+        // get new x and y
+        //
+        [this.x, this.y] = offset_position(this.x, this.y, 0, [0, width]);
+      }
+
       push();
       translate(this.x, this.y, this.z);
+
+      texture(img);
       sphere(this.size);
       pop();
 
@@ -108,11 +117,15 @@ const box_manager = (x, y, z) => {
  * @returns {array} The position of the box.
  **/
 const make_grid_position = (row, col) => {
-  let x = row * 200;
-  let y = col * 200;
+  let x = row * 100;
+  let y = col * 100;
 
   return [x, y, 0];
 };
+let img;
+function preload() {
+  img = loadImage("../test.png");
+}
 
 function setup() {
   let w = 900;
@@ -131,18 +144,24 @@ function setup() {
 }
 
 function draw() {
-  // background(0, 255, 0);
+  background(255);
   noStroke();
 
   push();
 
   translate(-width / 2, -height / 2, 0);
 
-  let dirX = (mouseX / width - 0.5) * 2;
-  let dirY = (mouseY / height - 0.5) * 2;
-  directionalLight(250, 250, 250, -dirX, -dirY, -1);
+  // image(img, 0, -100, width, height);
 
-  emissiveMaterial(200, 200, 200);
+  let dirX = frameCount / 100;
+  let dirY = frameCount * 2;
+  directionalLight(255, 255, 255, -dirX, -dirY, -1);
+
+  dirX = -frameCount / 100;
+  dirY = frameCount * -2;
+  directionalLight(255, 255, 255, -dirX, -dirY, 1);
+
+  // emissiveMaterial(170, 170, 170);
 
   grid.grid.forEach((b) => b.tick());
   dispose();
@@ -150,6 +169,8 @@ function draw() {
   let cut = get(0, 0, width, height);
 
   pop();
+
+  // blendMode(MULTIPLY);
 
   posterLayer.image(cut, 0, 0, posterLayer.width, posterLayer.height);
 }

@@ -34,7 +34,7 @@
     }
 
     .a-canvas {
-      /* mix-blend-mode: screen; */
+      mix-blend-mode: multiply;
     }
   </style>
 </head>
@@ -50,7 +50,7 @@
     <a-entity id="example-target" mindar-image-target="targetIndex: 0">
       <!-- Our p5.js canvas as texture on plane -->
       <!-- <a-plane color="blue" opaciy="0.5" position="0 0 0" height="0.552" width="1" rotation="0 0 0"></a-plane> -->
-      <a-plane position=".25  0 0" scale="1.05 1.05 1.05 " height="2" width="2" rotation="0 0 0" material="src:#canvas"
+      <a-plane position=".25  0 0" scale="1.05 1.05 1.05 " height="3" width="3" rotation="0 0 0" material="src:#canvas"
         canvas-updater></a-plane>
     </a-entity>
   </a-scene>

@@ -144,24 +144,12 @@ function setup() {
 }
 
 function draw() {
-  background(255);
+  // background(255);
   noStroke();
 
   push();
 
   translate(-width / 2, -height / 2, 0);
-
-  // image(img, 0, -100, width, height);
-
-  let dirX = frameCount / 100;
-  let dirY = frameCount * 2;
-  directionalLight(255, 255, 255, -dirX, -dirY, -1);
-
-  dirX = -frameCount / 100;
-  dirY = frameCount * -2;
-  directionalLight(255, 255, 255, -dirX, -dirY, 1);
-
-  // emissiveMaterial(170, 170, 170);
 
   grid.grid.forEach((b) => b.tick());
   dispose();

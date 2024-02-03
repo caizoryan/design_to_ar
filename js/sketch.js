@@ -8,11 +8,9 @@
 // variables
 let grid, world, posterLayer;
 
-const width = window.innerWidth;
-const height = window.innerHeight;
 const max_amt = 300;
 const size_max = 0.009;
-const size_min = 0.02;
+const size_min = 0.04;
 
 // ----------------
 // helpers or utils
@@ -28,7 +26,7 @@ const random = (min, max) => Math.random() * (max - min) + min;
 
 /** will take a position and return a new position with a random offset, default is -400 and 400
  * @returns {array} The new position with the offset. */
-const offset_position = (x, y, z = 0, [min, max] = [-100, 100]) => [
+const offset_position = (x, y, z = 0, [min, max] = [-10, 10]) => [
   x + random(min, max),
   y + random(min, max),
   z + random(min, max),
@@ -136,7 +134,6 @@ function setup() {
   // let h = w;
   // h = 1700;
   createCanvas(w, h, WEBGL);
-  pixelDensity(1);
   grid = make_grid(10, 10);
   posterLayer = createGraphics(
     width,

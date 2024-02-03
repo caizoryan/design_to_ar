@@ -11,8 +11,8 @@ let grid, world, posterLayer;
 const width = window.innerWidth;
 const height = window.innerHeight;
 const max_amt = 300;
-const size_max = 20;
-const size_min = 40;
+const size_max = 0.009;
+const size_min = 0.02;
 
 // ----------------
 // helpers or utils
@@ -75,11 +75,14 @@ const make_grid = (rows, cols) => {
  * -> stuff like that
  * */
 const box_manager = (x, y, z) => {
+  let r_index = Math.floor(Math.random() * imgs.length);
+  let img = imgs[r_index];
   return {
     x,
     y,
     z,
-    size: random(size_min, size_max),
+    texture: img,
+    size: random(size_min * width, size_max * width),
     lifetime: Math.random() * 1000,
 
     // this is the tick function, it will run every frame
@@ -97,7 +100,7 @@ const box_manager = (x, y, z) => {
       push();
       translate(this.x, this.y, this.z);
 
-      texture(img);
+      texture(this.texture);
       sphere(this.size);
       pop();
 
@@ -105,6 +108,10 @@ const box_manager = (x, y, z) => {
       if (Math.random() > 0.99 && !grid.full()) {
         const b = box_manager(...offset_position(this.x, this.y));
 
+        let r_index = Math.floor(Math.random() * imgs.length);
+        let img = imgs[r_index];
+
+        this.texture = img;
         // need to add to the scene and the grid array
         grid.grid.push(b);
       }
@@ -116,21 +123,24 @@ const box_manager = (x, y, z) => {
  * @returns {array} The position of the box.
  **/
 const make_grid_position = (row, col) => {
-  let x = row * 100;
-  let y = col * 100;
+  let x = row * (height / 10);
+  let y = col * (width / 10);
 
   return [x, y, 0];
 };
-let img;
+let imgs;
 function preload() {
-  img = loadImage("./test.png");
+  imgs = [];
+  for (let i = 0; i <= 8; i++) {
+    imgs.push(loadImage("./back/back-" + i + ".jpeg"));
+  }
 }
 
 function setup() {
   let w = 2000;
-  // let h = w * 1.414;
-  let h = w;
-  h = 1700;
+  let h = w * 1.414;
+  // let h = w;
+  // h = 1700;
   createCanvas(w, h, WEBGL);
   pixelDensity(1);
   grid = make_grid(10, 10);
@@ -146,18 +156,18 @@ function setup() {
 function draw() {
   background(0);
   noStroke();
-  camera(0, 0, 1500);
+  // camera(width / 2, height / 2, 5000, width / 2, height / 2, 0, 0, 1, 0);
+  camera(width / 4, height / 2, 3000, width / 4, height / 2, 0, 0, 1, 0);
 
-  push();
+  // push();
 
-  translate(-width / 4, -height / 4, 0);
-
+  // translate(-width / 2, -height / 2, 0);
   grid.grid.forEach((b) => b.tick());
   dispose();
 
   let cut = get(0, 0, width, height);
 
-  pop();
+  // pop();
 
   // blendMode(MULTIPLY);
 

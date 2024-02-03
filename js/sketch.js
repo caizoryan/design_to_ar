@@ -40,13 +40,7 @@ const remove_from_grid = (id) =>
 
 /** will take an id and remove the object with that id from the scene and the grid */
 const dispose = () => {
-  let len = grid.grid.length;
   grid.grid = grid.grid.filter((b) => b.lifetime > 0);
-
-  let diff = len - grid.grid.length;
-  if (diff > 0) {
-    console.log("disposing", diff);
-  }
 };
 
 // ----------------

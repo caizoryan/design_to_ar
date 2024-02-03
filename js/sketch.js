@@ -154,22 +154,14 @@ function setup() {
 }
 
 function draw() {
-  background(0);
+  background(255);
   noStroke();
-  // camera(width / 2, height / 2, 5000, width / 2, height / 2, 0, 0, 1, 0);
   camera(width / 4, height / 2, 3000, width / 4, height / 2, 0, 0, 1, 0);
 
-  // push();
-
-  // translate(-width / 2, -height / 2, 0);
   grid.grid.forEach((b) => b.tick());
   dispose();
 
   let cut = get(0, 0, width, height);
-
-  // pop();
-
-  // blendMode(MULTIPLY);
 
   posterLayer.image(cut, 0, 0, posterLayer.width, posterLayer.height);
 }

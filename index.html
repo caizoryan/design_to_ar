@@ -31,10 +31,11 @@
       //   });
       // });
     </script>
-    <script
+    <!-- <script
       src="https://rawgit.com/mayognaise/aframe-gif-shader/master/dist/aframe-gif-shader.min.js"
       defer
-    ></script>
+    ></script> -->
+    <script src="./js/aframe-gif-shader.min.js"></script>
     <!-- <script type="text/javascript">
       AFRAME.registerComponent("canvas-updater", {
         dependencies: ["geometry", "material"],
@@ -114,7 +115,12 @@
       <a-assets>
         <img id="ar-test" src="./ar-2.gif" />
       </a-assets>
-      <a-entity id="example-target" mindar-image-target="targetIndex: 0">
+      <a-entity
+        id="example-target"
+        mindar-image-target="targetIndex: 0"
+        geometry="primitive:plane;"
+        material="shader:gif;src:#ar-test"
+      >
         <!-- Our p5.js canvas as texture on plane -->
         <!-- <a-plane
           color="blue"
@@ -125,11 +131,11 @@
           rotation="0 0 0"
           scale="1.05 1.05 1.05"
         ></a-plane> -->
-        <a-entity
-          geometry="primitive:box;"
+        <!-- <a-entity
+          geometry="primitive:plane;"
           material="shader:gif;src:#ar-test"
           transparent="true"
-        ></a-entity>
+        ></a-entity> -->
         <!-- <a-plane
           position="0 0 0"
           material="shader:gif;src:#ar-test"

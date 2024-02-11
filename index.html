@@ -17,21 +17,25 @@
 
     <!-- A-Frame keep loading latest output of canvas -->
     <script>
-      var vid;
+      // var vid;
 
-      $(function () {
-        vid = $("#arvideo").get(0);
+      // $(function () {
+      //   vid = $("#arvideo").get(0);
 
-        $("#start").click(function () {
-          $("#pre_start").hide();
-          console.log("click");
-          vid.play();
-          // vid.pause();
-          vid.currentTime = 0;
-        });
-      });
+      //   $("#start").click(function () {
+      //     $("#pre_start").hide();
+      //     console.log("click");
+      //     vid.play();
+      //     // vid.pause();
+      //     vid.currentTime = 0;
+      //   });
+      // });
     </script>
-    <script type="text/javascript">
+    <script
+      src="https://rawgit.com/mayognaise/aframe-gif-shader/master/dist/aframe-gif-shader.min.js"
+      defer
+    ></script>
+    <!-- <script type="text/javascript">
       AFRAME.registerComponent("canvas-updater", {
         dependencies: ["geometry", "material"],
 
@@ -51,15 +55,15 @@
       //   console.log("click");
       //   document.querySelector("#arvideo").play();
       // });
-    </script>
+    </script> -->
     <style type="text/css">
       body {
         background: #255;
       }
 
       .a-canvas {
-        mix-blend-mode: multiply;
-        filter: contrast(1) brightness(1);
+        /* mix-blend-mode: multiply;
+        filter: contrast(1) brightness(1); */
       }
     </style>
     <style>
@@ -96,11 +100,11 @@
     <!-- <canvas id="canvas"></canvas> -->
 
     <!-- MindAR + A-Frame tracking -->
-    <div class="arjs-loader" id="pre_start">
+    <!-- <div class="arjs-loader" id="pre_start">
       <div class="center-v">
         <button id="start">Start</button>
       </div>
-    </div>
+    </div> -->
     <a-scene
       mindar-image="imageTargetSrc: ./targets.mind; filterMinCF:0.0005; filterBeta: .1;"
       vr-mode-ui="enabled: false"
@@ -108,8 +112,8 @@
     >
       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
       <a-assets>
-        <video id="arvideo" src="AR.mp4" autoplay loop="true"></video
-      ></a-assets>
+        <img id="ar-test" src="./ar-2.gif" />
+      </a-assets>
       <a-entity id="example-target" mindar-image-target="targetIndex: 0">
         <!-- Our p5.js canvas as texture on plane -->
         <!-- <a-plane
@@ -121,6 +125,16 @@
           rotation="0 0 0"
           scale="1.05 1.05 1.05"
         ></a-plane> -->
+        <a-entity
+          geometry="primitive:box;"
+          material="shader:gif;src:#ar-test"
+          transparent="true"
+        ></a-entity>
+        <!-- <a-plane
+          position="0 0 0"
+          material="shader:gif;src:#ar-test"
+          canvas-updater
+        ></a-plane> -->
         <!-- <a-plane
           position="0 0 0"
           height="1"
@@ -130,7 +144,7 @@
           roughness="1"
           canvas-updater
         ></a-plane> -->
-        <a-video
+        <!-- <a-video
           height="2"
           width="2"
           src="#arvideo"
@@ -138,7 +152,7 @@
           rotation="0 0 0"
           roughness="1"
         >
-        </a-video>
+        </a-video> -->
       </a-entity>
     </a-scene>
   </body>
